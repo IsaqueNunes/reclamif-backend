@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: reclamif
+    ports:
+      - 5432:5432
+    volumes:
+      - reclamif:/var/lib/postgresql/data
+
+volumes:
+  reclamif:
