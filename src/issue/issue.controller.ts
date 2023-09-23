@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req } from '@nestjs/common';
 import { IssueDTO } from './issue.dto';
 import { IssueService } from './issue.service';
 import { Issue } from '@prisma/client';
+import { Request } from 'express';
 
 @Controller('issue')
 export class IssueController {

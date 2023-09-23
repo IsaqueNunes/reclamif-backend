@@ -7,5 +7,6 @@ import { ClaimantController } from './claimant.controller';
   controllers: [ClaimantController],
   imports: [DbModule],
   providers: [ClaimantService],
+  exports: [ClaimantService],
 })
 export class ClaimantModule {}

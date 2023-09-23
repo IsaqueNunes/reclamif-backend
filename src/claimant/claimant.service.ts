@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../db/prisma.service';
 import { RegisterClaimantDTO } from './dto/register.dto';
 import { Claimant } from '@prisma/client';
+import { hash } from 'bcrypt';
 
 const messageSelect = {
   id: true,
@@ -16,7 +17,11 @@ export class ClaimantService {
   constructor(private prismaService: PrismaService) {}
 
   async register(claimant: RegisterClaimantDTO): Promise<void> {
-    await this.prismaService.claimant.create({ data: { ...claimant } });
+    hash(claimant.password, 10, async (err, encrypted) => {
+      await this.prismaService.claimant.create({
+        data: { ...claimant, password: encrypted },
+      });
+    });
   }
 
   async findById(
@@ -24,7 +29,6 @@ export class ClaimantService {
     issues?: boolean,
     messagesInIssues?: boolean,
   ): Promise<Claimant> {
-    console.log(messagesInIssues);
     return await this.prismaService.claimant.findUnique({
       where: { id },
       include: {
